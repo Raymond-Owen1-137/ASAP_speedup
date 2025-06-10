@@ -3,7 +3,13 @@
 import os
 print("CWD:", os.getcwd())
 print("FILES:", os.listdir())
-from draw_context import DrawContext
+try:
+    import pyximport
+    pyximport.install()
+    from draw_context_cython import DrawContext
+except Exception as e:
+    print("Falling back to Python DrawContext:", e)
+    from draw_context import DrawContext
 
 import numpy as np
 import matplotlib
@@ -2456,7 +2462,7 @@ ctx = DrawContext(
 )
 print(nres)
 
-from draw_context import DrawContext
+# DrawContext already imported at the top
 
 # Assume all required assignment arrays are already defined above this block:
 # nres, probzero, current_nca, current_nco, nposs, poss, nmatch, possmatch,
