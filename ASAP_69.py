@@ -6,10 +6,13 @@ print("FILES:", os.listdir())
 try:
     import pyximport
     pyximport.install()
-    from draw_context_cython import DrawContext
+    from draw_context_cython import DrawContext, run_draws
 except Exception as e:
     print("Falling back to Python DrawContext:", e)
     from draw_context import DrawContext
+    def run_draws(ctx, n_iter):
+        for _ in range(n_iter):
+            ctx.draw()
 
 import numpy as np
 import matplotlib
@@ -2487,9 +2490,7 @@ ctx = DrawContext(
 )
 
 N_ITER = 2_000
-
-for _ in range(N_ITER):
-    ctx.draw()
+run_draws(ctx, N_ITER)
 
 # At this point, ctx.current_nca and ctx.current_nco hold the final assignments.
 # Optionally, output or analyze the result:

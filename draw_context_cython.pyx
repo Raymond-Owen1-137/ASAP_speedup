@@ -119,3 +119,9 @@ cdef class DrawContext:
         self.asgn_newnca = new_nca
         self.asgn_newnco = new_nco
         return kres
+
+cpdef run_draws(DrawContext ctx, int n_iter):
+    """Run ``ctx.draw()`` ``n_iter`` times."""
+    cdef int i
+    for i in range(n_iter):
+        ctx.draw()
